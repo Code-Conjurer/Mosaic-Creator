@@ -61,14 +61,16 @@ public class Mosaic extends Application {
 
 		int pixelsCounted = 0;
 		Color temp = null;
-
+/*
 		for(int x = 0; x < img.getWidth(); x++){
 			for(int y = 0; y < img.getHeight(); y++){
-				//every 80x60 
-				if(x % sizeX == 0 && y % sizeY == 0 && (x != 0 && y != 0)){
+
+				//every 80x60
+				if(y % sizeY == 0 && x % sizeX == 0  && (x != 0 && y != 0)){
 					red = red / (pixelsCounted);
 					green = green / (pixelsCounted);
-					blue = blue / (pixelsCounted);
+                    blue = blue / (pixelsCounted);
+
 
 					temp = new Color(red, green, blue, opacity);
 					brightness = (temp.getBrightness());
@@ -90,9 +92,9 @@ public class Mosaic extends Application {
 				pixelsCounted++;
 				red += temp.getRed();
 				green += temp.getGreen();
-				blue += temp.getBlue();				
+				blue += temp.getBlue();
 			}
-		}
+		}*/
 		
 		GridPane gp = new GridPane();
 		Scene scene = new Scene(gp, sceneWidth, sceneHeight);
