@@ -29,18 +29,18 @@ public class Mosaic extends Application {
 			File dir = new File(Mosaic.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res/tiles/jpg");
 			dirList = dir.listFiles();
 
-			pieces = new Piece[dirList.length];
-
-			for(int i = 0; i < dirList.length; i++){
-				Image temp = new Image(dirList[i].toURI().toString());
-				pieces[i] = new Piece(temp);
-			}
-
-			mergeSort(pieces);
-
-		} catch (Exception e){
-			System.out.println(e);
+		pieces = new Piece[dirList.length];
+		Image temp;
+		for(int i = 0; i < dirList.length; i++){
+			temp = new Image(dirList[i].toURI().toString());
+			pieces[i] = new Piece(temp);
 		}
+
+		mergeSort(pieces);
+
+	} catch (Exception e){
+		System.out.println(e);
+	}
 		launch(args);
 	}
 
