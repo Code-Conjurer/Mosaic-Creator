@@ -3,9 +3,7 @@ import java.io.File;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
+import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -14,14 +12,14 @@ public class Mosaic extends Application {
 
 	public static File[] dirList;
 	public static Piece[] pieces;
-	public static final int sizeX = 8; //80
-	public static final int sizeY = 6; //60
+	public static final int sizeX = 10; //80
+	public static final int sizeY = 10; //60
 	private static final double opacity = 0;
 
 	int sceneHeight = 800;
 	int sceneWidth = 600;
-	int tileSizeX = 4;
-	int tileSizeY = 4;
+	int tileSizeX =sizeX;
+	int tileSizeY =sizeY;
 
 	public static void main(String[] args){
 
@@ -55,7 +53,7 @@ public class Mosaic extends Application {
 		} catch (Exception e) {
 			System.out.println("file not found");
 		}
-		//Image[] imageList = new Image[(int) ((img.getWidth()/sizeX)*(img.getHeight()/sizeY))]; //TODO: change this so there's no possible rounding error
+
 		Image[][] imageList = new Image[(int)(img.getWidth()/sizeX)][(int)(img.getHeight()/sizeY)];
 		double red = 0; double green = 0; double blue = 0;
 		double brightness;
@@ -99,18 +97,31 @@ public class Mosaic extends Application {
 		GridPane gp = new GridPane();
 		Scene scene = new Scene(gp, sceneWidth, sceneHeight);
 
-		for(int x = 0; x < img.getWidth()/sizeX ; x++ ){
-			for(int y = 0; y < img.getHeight()/sizeY ; y++){
+		int imagePixelsX = ((int)img.getWidth());
+		int imagePixelsY = ((int)img.getHeight());
+		WritableImage mosaic = new WritableImage(imagePixelsX, imagePixelsY);
+		PixelWriter pixelWriter = mosaic.getPixelWriter();
+		PixelReader pixelReader;
+		//ImageView tile = new ImageView();
+		Image tile;
+		for(int x = 0; x < imagePixelsX/sizeX - 1; x++ ){
+			for(int y = 0; y < imagePixelsY/sizeY - 1; y++){
+				tile = ImageTransformer.reduce(imageList[x][y], tileSizeX, tileSizeY);
+				pixelReader = tile.getPixelReader();
+				pixelWriter.setPixels(x*sizeX, y*sizeY, tileSizeX, tileSizeY, pixelReader, 0, 0);
 
-				//tempImage = imageList[(int) (x * (img.getHeight()/sizeY) + y)];
-				ImageView tile = new ImageView();
+				/*ImageView tile = new ImageView();
 				tile.setImage(imageList[x][y]);
 				tile.setFitHeight(tileSizeY);
 				tile.setFitWidth(tileSizeX);
-				gp.add(tile, x, y);
+				gp.add(tile, x, y);*/
 			}
 		}
+		ImageView imageView = new ImageView(mosaic);
+		imageView.setFitWidth(imagePixelsX);
+		imageView.setFitHeight(imagePixelsY);
 
+		gp.add(imageView, 0,0);
 		theStage.setTitle("Mosaic");
 		theStage.setScene(scene);
 		theStage.show();
@@ -142,6 +153,7 @@ public class Mosaic extends Application {
 		return -1;
 
 	}
+
 	/*
 	 * compares the color values and returns if there in the marginOfError
 	 * recurse if the color is not found in the, by modifying the marginOfError
@@ -182,7 +194,6 @@ public class Mosaic extends Application {
 	/*
 	 * merge sort using overwritten compareTo method int Piece
 	 */
-
 	public static void mergeSort(Piece[] list){
 		int length = list.length;
 		if(length < 2)
@@ -219,11 +230,6 @@ public class Mosaic extends Application {
 		while (indexR < rightSize) {
 			list[index++] = right[indexR++];
 		}
-	}	
-	/* changes color values from a range of 0.0 - 1.0 into the range 0 - 255
-	 */
-	//public static int toWebColor(double x){
-		//return (int)(x * 255);
-	//}
+	}
 
 }

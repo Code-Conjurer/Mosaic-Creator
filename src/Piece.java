@@ -1,17 +1,11 @@
 
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
 
 
-/*
- * Converted Buffered Image to Image:
- * -to revert back change Color import
- *  to awt (from javafx)
- *  
- * -uncomment all commented lines, and remove* redundant lines 
- */
 public class Piece implements Comparable<Piece>{
 
 	private Color avgColor;
