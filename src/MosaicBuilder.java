@@ -2,9 +2,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
 import java.io.File;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MosaicBuilder {
 
@@ -44,26 +41,20 @@ public class MosaicBuilder {
         PixelReader pr = img.getPixelReader();
         int numberOfTilesX = imageWidth / tileSizeX;
         int numberOfTilesY = imageHeight / tileSizeY;
+        
+        Thread[] tileBuilders = new TileBuilder[numberOfTilesX * numberOfTilesY];
 
-        Thread[][] tileBuilders = new TileBuilder[numberOfTilesX][numberOfTilesY];
+        int index;
         for (int x = 0; x < numberOfTilesX; x++) {
             for (int y = 0; y < numberOfTilesY; y++) {
-                tileBuilders[x][y] = new TileBuilder(
+                index = (numberOfTilesX * x) + y;
+
+                tileBuilders[index] = new TileBuilder(
                         x * tileSizeX, y * tileSizeY, tileSizeX, tileSizeY,
                         pieces, mosaicArr, pr);
-            }
-        }
 
-        ExecutorService executor = Executors.newFixedThreadPool();
-        for (Thread[] tbArr : tileBuilders)
-            for (Thread tb : tbArr)
-                tb.start();
-        try {
-            for (Thread[] tbArr : tileBuilders)
-                for (Thread tb : tbArr)
-                    tb.join();
-        } catch (Exception e) {
-            e.printStackTrace();
+                tileBuilders[index].start();
+            }
         }
     }
 

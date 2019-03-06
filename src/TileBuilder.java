@@ -22,8 +22,8 @@ public class TileBuilder extends Thread {
 
     @Override
     public void run(){
-        int xIndex = sourceX/sizeX - 1;
-        int yIndex = sourceY/sizeY - 1;
+        int xIndex = sourceX/sizeX;
+        int yIndex = sourceY/sizeY;
         if(mosaicTiles[xIndex][yIndex] != null){
             System.out.println("Collision: " + xIndex + " " + yIndex);
             return;

@@ -61,8 +61,10 @@ public class Mosaic extends Application {
 
 		int pixelsCounted = 0;
 		Color temp = null;
-/*
-		for(int x = 0; x < img.getWidth(); x++){
+
+		long start = System.currentTimeMillis();
+		initializeMosaicArr(img, imageList,(int) img.getWidth(),(int) img.getHeight());
+		/*for(int x = 0; x < img.getWidth(); x++){
 			for(int y = 0; y < img.getHeight(); y++){
 
 				//every 80x60
@@ -95,6 +97,9 @@ public class Mosaic extends Application {
 				blue += temp.getBlue();
 			}
 		}*/
+        long end = System.currentTimeMillis();
+        System.out.println((end-start));
+
 		
 		GridPane gp = new GridPane();
 		Scene scene = new Scene(gp, sceneWidth, sceneHeight);
@@ -233,5 +238,27 @@ public class Mosaic extends Application {
 			list[index++] = right[indexR++];
 		}
 	}
+
+    private void initializeMosaicArr(Image img, Image[][] mosaicArr, int imageWidth, int imageHeight) {
+        PixelReader pr = img.getPixelReader();
+        int numberOfTilesX = imageWidth / tileSizeX;
+        int numberOfTilesY = imageHeight / tileSizeY;
+
+
+        Thread[] tileBuilders = new TileBuilder[numberOfTilesX * numberOfTilesY];
+
+        int index;
+        for (int x = 0; x < numberOfTilesX; x++) {
+            for (int y = 0; y < numberOfTilesY; y++) {
+                index = (numberOfTilesX * x) + y;
+
+                tileBuilders[index] = new TileBuilder(
+                        x * tileSizeX, y * tileSizeY, tileSizeX, tileSizeY,
+                        pieces, mosaicArr, pr);
+
+                tileBuilders[index].start();
+            }
+        }
+    }
 
 }
