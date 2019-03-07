@@ -1,15 +1,14 @@
 package back;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
+import javafx.scene.image.*;
 
 import java.io.File;
 
-public class MosaicBuilder {
+public class MosaicBuilder{
 
     private Piece[] pieces;
-    private int tileSizeX;
-    private int tileSizeY;
+    private int tileSizeX = 10;
+    private int tileSizeY = 10;
     private Image mosaic;
 
     public MosaicBuilder(File tileDir) {
@@ -29,9 +28,9 @@ public class MosaicBuilder {
     public void setImage(Image image){
         mosaic = image;
     }
-    public Image run(int tileSizeX, int tileSizeY){
-        this.tileSizeX = tileSizeX;
-        this.tileSizeY = tileSizeY;
+    public Image run(){
+        //this.tileSizeX = tileSizeX;
+        //this.tileSizeY = tileSizeY;
         //Image img = new Image(imageFile.toURI().toString());
         int imageWidth = (int) mosaic.getWidth();
         int imageHeight = (int) mosaic.getHeight();
@@ -51,7 +50,7 @@ public class MosaicBuilder {
         int index;
         for (int x = 0; x < numberOfTilesX; x++) {
             for (int y = 0; y < numberOfTilesY; y++) {
-                index = (numberOfTilesX * x) + y;
+                index = (numberOfTilesY * x) + y;
 
                 tileBuilders[index] = new TileBuilder(
                         x * tileSizeX, y * tileSizeY, tileSizeX, tileSizeY,
@@ -60,6 +59,33 @@ public class MosaicBuilder {
                 tileBuilders[index].start();
             }
         }
+        for(Thread t : tileBuilders) {
+            try {
+                t.join();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        WritableImage writableMosaic = new WritableImage(imageWidth, imageHeight);
+        Image tempTile;
+        PixelReader pixelReader;
+        PixelWriter pixelWriter = writableMosaic.getPixelWriter();
+        for(int x = 0; x < numberOfTilesX; x++ ){
+            for(int y = 0; y < numberOfTilesY; y++){
+                tempTile = ImageTransformer.reduce(mosaicArr[x][y], tileSizeX, tileSizeY);
+                pixelReader = tempTile.getPixelReader();
+                pixelWriter.setPixels(x*tileSizeX, y*tileSizeY, tileSizeX, tileSizeY, pixelReader, 0, 0);
+
+				/*ImageView tile = new ImageView();
+				tile.setImage(imageList[x][y]);
+				tile.setFitHeight(tileSizeY);
+				tile.setFitWidth(tileSizeX);
+				gp.add(tile, x, y);*/
+            }
+        }
+
+        mosaic = (Image) writableMosaic;
     }
 
     //public void setTiles(File tileDir){

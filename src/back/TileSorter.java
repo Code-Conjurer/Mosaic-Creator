@@ -9,7 +9,7 @@ public class TileSorter {
     }
 
     private static void mergeSort(Piece[] list){
-        /*
+
         int length = list.length;
         if(length < 2)
             return;
@@ -24,7 +24,7 @@ public class TileSorter {
         mergeSort(rightArr);
         mergeSort(leftArr);
         merge(leftArr, rightArr, list);
-        */
+
     }
 
     private static void merge(Piece[] left, Piece[] right, Piece[] list){

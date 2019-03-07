@@ -16,25 +16,19 @@ public class Mosaic {
     Controller controller;
     UserInterface userInterface;
 
-    public Mosaic(String... args){
-        if(args == null) {
-            try {
-                mosaicBuilder = new MosaicBuilder(new File(Mosaic.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res/tiles/jpg"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else{
-            System.out.println("failed to load");
-            //mosaicBuilder = new MosaicBuilder(new File(args[0]));
+    public Mosaic(){
+        try {
+            mosaicBuilder = new MosaicBuilder(new File(Mosaic.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res/tiles/jpg"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         controller = new Controller();
-        userInterface = new UserInterface(this);
-        Application.launch(UserInterface.class, args);
+        controller.setMosaic(this);
     }
 
-    public static void main(String[] args) {
-        new Mosaic(args);
+    public void setUserInterface(UserInterface userInterface){
+        this.userInterface = userInterface;
     }
 
     public void setImageFile(File imageFile){
@@ -45,15 +39,22 @@ public class Mosaic {
 
     }
 
+    public Controller getController(){
+        return controller;
+    }
     public Image getImage(){
         return image;
     }
 
     public void runMosaicBuilder(Integer tileSizeX, Integer tileSizeY){
-        if(tileSizeX == null || tileSizeY == null)
-            image = mosaicBuilder.run(DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE);
-        image = mosaicBuilder.run(tileSizeX, tileSizeY);
+        if(tileSizeX == null || tileSizeY == null){
+            mosaicBuilder.setTileSize(DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE);
+        }else{
+            mosaicBuilder.setTileSize(tileSizeX.intValue(), tileSizeY.intValue());
+        }
 
+        image = mosaicBuilder.run();
+        System.out.println("done");
         controller.showImage(image);
     }
 }

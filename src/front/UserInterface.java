@@ -15,20 +15,24 @@ public class UserInterface extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-     
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
-        loader.setController(mosaic);
+        mosaic = new Mosaic();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui.fxml"));
+        loader.setController(mosaic.getController());
+        //((Controller) loader.getController()).setMosaic(mosaic);
+        //((Controller) loader.getController()).setupEvents();
 
         Parent root = loader.load();
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root, 1400, 900));
         primaryStage.sizeToScene();
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
-    public UserInterface(Mosaic mosaic){
-        this.mosaic = mosaic;
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }

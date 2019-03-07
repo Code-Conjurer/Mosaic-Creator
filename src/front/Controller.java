@@ -38,11 +38,14 @@ public class Controller {
     //private UserInterface userInterface;
     private Mosaic mosaic;
 
-    public void initialize(Mosaic mosaic) {
-        System.out.println("init");
+    public void setMosaic(Mosaic mosaic){
+        this.mosaic = mosaic;
+    }
+
+    public void initialize() {
         fileChooser = new FileChooser();
         //this.userInterface = userInterface;
-        this.mosaic = mosaic;
+        //this.mosaic = mosaic;
         setupEvents();
 
     }

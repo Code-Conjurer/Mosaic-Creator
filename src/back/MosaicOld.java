@@ -151,6 +151,7 @@ public class MosaicOld extends Application {
 				gp.add(tile, x, y);*/
 			}
 		}
+
 		ImageView imageView = new ImageView(mosaic);
 		imageView.setFitWidth(imagePixelsX);
 		imageView.setFitHeight(imagePixelsY);
