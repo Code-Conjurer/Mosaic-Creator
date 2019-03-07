@@ -41,7 +41,7 @@ public class MosaicBuilder {
         PixelReader pr = img.getPixelReader();
         int numberOfTilesX = imageWidth / tileSizeX;
         int numberOfTilesY = imageHeight / tileSizeY;
-        
+
         Thread[] tileBuilders = new TileBuilder[numberOfTilesX * numberOfTilesY];
 
         int index;

@@ -3,17 +3,20 @@ import java.io.File;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Mosaic extends Application {
 
-	public static File[] dirList;
-	public static Piece[] pieces;
-	public static final int sizeX = 10; //80
-	public static final int sizeY = 10; //60
+	static File[] dirList;
+	static Piece[] pieces;
+	static int sizeX = 10; //80
+	static int sizeY = 10; //60
 	private static final double opacity = 0;
 
 	int sceneHeight = 800;
@@ -63,7 +66,33 @@ public class Mosaic extends Application {
 		Color temp = null;
 
 		long start = System.currentTimeMillis();
-		initializeMosaicArr(img, imageList,(int) img.getWidth(),(int) img.getHeight());
+
+        PixelReader pr = img.getPixelReader();
+        int numberOfTilesX = ((int)img.getWidth()) / tileSizeX;
+        int numberOfTilesY = ((int)img.getHeight()) / tileSizeY;
+
+
+        Thread[] tileBuilders = new TileBuilder[numberOfTilesX * numberOfTilesY];
+
+        //int index;
+        for (int x = 0; x < numberOfTilesX; x++) {
+            for (int y = 0; y < numberOfTilesY; y++) {
+                index = (numberOfTilesX * x) + y;
+
+                tileBuilders[index] = new TileBuilder(
+                        x * tileSizeX, y * tileSizeY, tileSizeX, tileSizeY,
+                        pieces, imageList, pr);
+
+                tileBuilders[index].start();
+            }
+        }
+        for(Thread t : tileBuilders) {
+            try {
+                t.join();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 		/*for(int x = 0; x < img.getWidth(); x++){
 			for(int y = 0; y < img.getHeight(); y++){
 
@@ -100,7 +129,7 @@ public class Mosaic extends Application {
         long end = System.currentTimeMillis();
         System.out.println((end-start));
 
-		
+
 		GridPane gp = new GridPane();
 		Scene scene = new Scene(gp, sceneWidth, sceneHeight);
 
@@ -132,6 +161,7 @@ public class Mosaic extends Application {
 		theStage.setTitle("Mosaic");
 		theStage.setScene(scene);
 		theStage.show();
+
 	}
 
 	/*
@@ -239,7 +269,7 @@ public class Mosaic extends Application {
 		}
 	}
 
-    private void initializeMosaicArr(Image img, Image[][] mosaicArr, int imageWidth, int imageHeight) {
+    /*private void initializeMosaicArr(Image img, Image[][] mosaicArr, int imageWidth, int imageHeight) {
         PixelReader pr = img.getPixelReader();
         int numberOfTilesX = imageWidth / tileSizeX;
         int numberOfTilesY = imageHeight / tileSizeY;
@@ -259,6 +289,6 @@ public class Mosaic extends Application {
                 tileBuilders[index].start();
             }
         }
-    }
+    }*/
 
 }

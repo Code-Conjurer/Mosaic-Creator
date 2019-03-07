@@ -1,3 +1,4 @@
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
@@ -17,8 +18,8 @@ public class TileBuilder extends Thread {
         this.pieces = pieces;
         this.mosaicTiles = mosaicTiles;
         this.pr = pr;
-    }
 
+    }
 
     @Override
     public void run(){
