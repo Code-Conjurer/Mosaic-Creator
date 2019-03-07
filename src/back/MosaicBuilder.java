@@ -1,3 +1,5 @@
+package back;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
@@ -10,9 +12,7 @@ public class MosaicBuilder {
     private int tileSizeY;
     private Image mosaic;
 
-    public MosaicBuilder(int tileSizeX, int tileSizeY, File tileDir) {
-        this.tileSizeX = tileSizeX;
-        this.tileSizeY = tileSizeY;
+    public MosaicBuilder(File tileDir) {
 
         File[] dirList = tileDir.listFiles();
 
@@ -26,14 +26,18 @@ public class MosaicBuilder {
         TileSorter.sort(pieces);
     }
 
-    public void run(File image){
-
-        Image img = new Image(image.toURI().toString());
-        int imageWidth = (int) img.getWidth();
-        int imageHeight = (int) img.getHeight();
+    public void setImage(Image image){
+        mosaic = image;
+    }
+    public Image run(int tileSizeX, int tileSizeY){
+        this.tileSizeX = tileSizeX;
+        this.tileSizeY = tileSizeY;
+        //Image img = new Image(imageFile.toURI().toString());
+        int imageWidth = (int) mosaic.getWidth();
+        int imageHeight = (int) mosaic.getHeight();
         Image[][] mosaicArr = new Image[imageWidth/tileSizeX][imageHeight/tileSizeY];
-        initializeMosaicArr(img, mosaicArr, imageWidth, imageHeight);
-
+        initializeMosaicArr(mosaic, mosaicArr, imageWidth, imageHeight);
+        return mosaic;
     }
 
 
@@ -58,9 +62,6 @@ public class MosaicBuilder {
         }
     }
 
-    private Image getMosaic(){
-        return mosaic;
-    }
     //public void setTiles(File tileDir){
 
     public void setTileSize(int tileSizeX, int tileSizeY){

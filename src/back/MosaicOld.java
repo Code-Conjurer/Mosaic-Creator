@@ -1,17 +1,15 @@
+package back;
 
 import java.io.File;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Mosaic extends Application {
+public class MosaicOld extends Application {
 
 	static File[] dirList;
 	static Piece[] pieces;
@@ -29,7 +27,7 @@ public class Mosaic extends Application {
 
 		try{
 
-			File dir = new File(Mosaic.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res/tiles/jpg");
+			File dir = new File(MosaicOld.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res/tiles/jpg");
 			dirList = dir.listFiles();
 
 		pieces = new Piece[dirList.length];
@@ -158,7 +156,7 @@ public class Mosaic extends Application {
 		imageView.setFitHeight(imagePixelsY);
 
 		gp.add(imageView, 0,0);
-		theStage.setTitle("Mosaic");
+		theStage.setTitle("MosaicOld");
 		theStage.setScene(scene);
 		theStage.show();
 

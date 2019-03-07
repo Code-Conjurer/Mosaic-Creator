@@ -1,4 +1,4 @@
-
+package back;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

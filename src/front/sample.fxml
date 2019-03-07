@@ -50,7 +50,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imageView" fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>
                </center>
@@ -67,7 +67,7 @@
                           </rowConstraints>
                            <children>
                               <Label text="Tile Width" />
-                              <TextField fx:id="tileWidthSetting" text="10" GridPane.columnIndex="1" />
+                              <TextField fx:id="tileWidthSetting" promptText="10" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                         <GridPane layoutX="10.0" layoutY="10.0">
@@ -80,7 +80,7 @@
                            </rowConstraints>
                            <children>
                               <Label text="Tile Height" />
-                              <TextField fx:id="tileHeightSetting" text="10" GridPane.columnIndex="1" />
+                              <TextField fx:id="tileHeightSetting" promptText="10" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                         <GridPane layoutX="10.0" layoutY="10.0">

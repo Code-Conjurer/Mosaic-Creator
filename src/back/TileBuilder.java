@@ -1,4 +1,5 @@
-import javafx.scene.canvas.GraphicsContext;
+package back;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
