@@ -1,20 +1,17 @@
 package front;
 
 import back.MosaicBuilder;
-import javafx.application.Application;
 import javafx.scene.image.Image;
-
-import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 
 public class Mosaic {
 
     final int DEFAULT_TILE_SIZE = 10;
     //File imageFile;
-    Image image;
-    MosaicBuilder mosaicBuilder;
-    Controller controller;
-    UserInterface userInterface;
+    private Image image;
+    private MosaicBuilder mosaicBuilder;
+    private Controller controller;
+    private UserInterface userInterface;
 
     public Mosaic(){
         try {
@@ -23,8 +20,8 @@ public class Mosaic {
             e.printStackTrace();
         }
 
-        controller = new Controller();
-        controller.setMosaic(this);
+        controller = new Controller(this);
+        //controller.setMosaic(this);
     }
 
     public void setUserInterface(UserInterface userInterface){

@@ -26,6 +26,16 @@ public class TileBuilder extends Thread {
     public void run(){
         int xIndex = sourceX/sizeX;
         int yIndex = sourceY/sizeY;
+
+        SimpleAlg(xIndex, yIndex);
+    }
+
+    private void quadrantAverageAlg(int xIndex, int yIndex) {
+
+    }
+
+
+    private void SimpleAlg(int xIndex, int yIndex){
         if(mosaicTiles[xIndex][yIndex] != null){
             System.out.println("Collision: " + xIndex + " " + yIndex);
             return;

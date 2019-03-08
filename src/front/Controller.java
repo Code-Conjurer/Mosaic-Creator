@@ -38,6 +38,11 @@ public class Controller {
     //private UserInterface userInterface;
     private Mosaic mosaic;
 
+
+    public Controller(Mosaic mosaic){
+        this.mosaic = mosaic;
+    }
+
     public void setMosaic(Mosaic mosaic){
         this.mosaic = mosaic;
     }

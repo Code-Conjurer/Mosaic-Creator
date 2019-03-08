@@ -11,7 +11,7 @@ import java.io.File;
 
 public class UserInterface extends Application {
 
-    public Mosaic mosaic;
+    private Mosaic mosaic;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
