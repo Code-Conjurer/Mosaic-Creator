@@ -48,7 +48,7 @@ public class SubImage implements Comparable{
     private double getBrightness(int x, int y){
 
     }
-    
+
     @Override
     public int compareTo(Object o) {
         if(!(o instanceof SubImage))
