@@ -30,7 +30,7 @@ public class TileList {
                 for (int y = 0; y < quadrantsY; y++) {
                     if (subTiles[x][y] == null)
                         subTiles[x][y] = new ArrayList<>(dirList.length);
-                    
+
                     tempSubTile = new SubTile(tempTile, x, y);
                     subTiles[x][y].add(tempSubTile);
                 }
