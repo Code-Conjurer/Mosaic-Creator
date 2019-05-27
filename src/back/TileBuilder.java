@@ -7,16 +7,16 @@ import javafx.scene.paint.Color;
 public class TileBuilder extends Thread {
 
     int sourceX; int sourceY; int sizeX; int sizeY;
-    Piece[] pieces;
+    Tile[] Tiles;
     Image[][] mosaicTiles;
     PixelReader pr;
 
-    public TileBuilder(int sourceX, int sourceY, int sizeX, int sizeY, Piece[] pieces, Image[][] mosaicTiles, PixelReader pr){
+    public TileBuilder(int sourceX, int sourceY, int sizeX, int sizeY, Tile[] Tiles, Image[][] mosaicTiles, PixelReader pr){
         this.sourceX = sourceX;
         this.sourceY = sourceY;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
-        this.pieces = pieces;
+        this.Tiles = Tiles;
         this.mosaicTiles = mosaicTiles;
         this.pr = pr;
 
@@ -54,15 +54,15 @@ public class TileBuilder extends Thread {
         green /= sizeX*sizeY;
         blue /= sizeX*sizeY;
         c = new Color(red, green, blue, 0);
-        int pieceIndex = search(pieces, c);
-        mosaicTiles[xIndex][yIndex] = pieces[pieceIndex].getImage();
+        int pieceIndex = search(Tiles, c);
+        mosaicTiles[xIndex][yIndex] = Tiles[pieceIndex].getImage();
     }
 
     /*
      * compares the brightness of two colors within the bounds, then
      * uses ColorCheck if similar brightness
      */
-    public static int search(Piece[] pieces, Color color){
+    public static int search(Tile[] pieces, Color color){
         double brightness = color.getBrightness();
         int low = 0;
         int high = pieces.length - 1;
@@ -90,7 +90,7 @@ public class TileBuilder extends Thread {
      * compares the color values and returns if there in the marginOfError
      * recurse if the color is not found in the, by modifying the marginOfError
      */
-    public static int colorCheck(Piece[] pieces,int index, Color c, double marginOfError){
+    public static int colorCheck(Tile[] pieces, int index, Color c, double marginOfError){
 
         double red = (c.getRed());
         double green = (c.getGreen());

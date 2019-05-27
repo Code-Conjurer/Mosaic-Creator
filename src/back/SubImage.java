@@ -4,8 +4,11 @@ package back;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
-public class SubImage implements Comparable{
+//public class SubImage implements Comparable{
+
+public class SubImage{
     int originX, originY, boundX, boundY;
+
     PixelReader reference;
 
     public SubImage(PixelReader reference, int originX, int originY, int boundX, int boundY){
@@ -14,9 +17,10 @@ public class SubImage implements Comparable{
         this.originY = originY;
         this.boundX = boundX;
         this.boundY = boundY;
+        init();
     }
 
-    private void foo(){
+    private void init(){
         double hue = 0;
         double saturation = 0;
         double brightness = 0;
@@ -49,10 +53,4 @@ public class SubImage implements Comparable{
 
     }
 
-    @Override
-    public int compareTo(Object o) {
-        if(!(o instanceof SubImage))
-            return 0;
-        return 1;
-    }
 }

@@ -24,7 +24,7 @@ public class Mosaic {
 
                 tileBuilders[index] = new TileBuilder(
                         x * tileSizeX, y * tileSizeY, tileSizeX, tileSizeY,
-                        pieces, mosaicArr, pr);
+                        Tiles, mosaicArr, pr);
 
                 tileBuilders[index].start();
             }
