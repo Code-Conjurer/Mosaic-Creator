@@ -23,7 +23,7 @@ public class UserInterface extends Application {
         //((Controller) loader.getController()).setupEvents();
 
         Parent root = loader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Mosaic Builder");
         primaryStage.setScene(new Scene(root, 1400, 900));
         primaryStage.sizeToScene();
         primaryStage.setResizable(false);

@@ -1,12 +1,12 @@
 package back;
 
-import javafx.scene.image.Image;
+/*import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
 public class Mosaic {
-    private Image img;
+    /*private Image img;
     private Image completedMosaic;
 
 
@@ -62,4 +62,4 @@ public class Mosaic {
     public Image getCompletedMosaic() {
         return completedMosaic;
     }
-}
+}*/

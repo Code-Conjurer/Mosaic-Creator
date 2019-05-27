@@ -6,7 +6,6 @@ import java.io.File;
 
 public class Mosaic {
 
-    final int DEFAULT_TILE_SIZE = 10;
     //File imageFile;
     private Image image;
     private MosaicBuilder mosaicBuilder;
@@ -31,7 +30,7 @@ public class Mosaic {
     public void setImageFile(File imageFile){
         //this.imageFile = imageFile;
         image = new Image(imageFile.toURI().toString());
-        mosaicBuilder.setImage(image);
+        //mosaicBuilder.setImage(image);
         controller.showImage(image);
 
     }
@@ -43,14 +42,14 @@ public class Mosaic {
         return image;
     }
 
-    public void runMosaicBuilder(Integer tileSizeX, Integer tileSizeY){
-        if(tileSizeX == null || tileSizeY == null){
-            mosaicBuilder.setTileSize(DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE);
-        }else{
-            mosaicBuilder.setTileSize(tileSizeX.intValue(), tileSizeY.intValue());
+    public void runMosaicBuilder(Integer tileSizeX, Integer tileSizeY, int NumOfQuadrants){
+
+        if (image == null) {
+            System.out.println("Null Image");
+            return;
         }
 
-        image = mosaicBuilder.run();
+        image = mosaicBuilder.run(image, tileSizeX, tileSizeY, NumOfQuadrants);
         System.out.println("done");
         controller.showImage(image);
     }
