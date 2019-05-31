@@ -1,5 +1,6 @@
 package back;
 
+import front.Mosaic;
 import javafx.scene.image.*;
 
 import java.io.File;
@@ -7,15 +8,15 @@ import java.io.File;
 public class MosaicBuilder{
 
     final int DEFAULT_TILE_SIZE = 10;
-    private TileList tileList;
+    private TileListBuilder tileListBuilder;
     private int tileSizeX;
     private int tileSizeY;
     private Image image;
 
     public MosaicBuilder(File tileDir) {
-        tileList = new TileList();
-        tileList.initialize(tileDir);
-        tileList.sort();
+        tileListBuilder = new TileListBuilder();
+        tileListBuilder.initialize(tileDir, 2, 2);
+        //tileListBuilder.sort();
         /*
         File[] dirList = tileDir.listFiles();
 
@@ -33,7 +34,7 @@ public class MosaicBuilder{
         this.image = image;
     }
 
-    public Image run(Image image, Integer tileSizeX, Integer tileSizeY, int NumOfQuadrants){
+    public Image run(Image image, Integer tileSizeX, Integer tileSizeY, int NumOfQuadrantsX, int NumOfQuadrantsY){
         //int imageWidth = mosaic.getWidth();
         //int imageHeight = mosaic.getHeight();
         //Image[][] mosaicArr = new Image[imageWidth/tileSizeX][imageHeight/tileSizeY];
@@ -47,17 +48,17 @@ public class MosaicBuilder{
             setTileSize(tileSizeX.intValue(), tileSizeY.intValue());
         }
 
-        buildMosaic();
-        return image;
+        return buildMosaic();
     }
 
 
     //private void initializeMosaicArr(Image img, Image[][] mosaicArr, int imageWidth, int imageHeight) {
-    private void buildMosaic() {
+    private Image buildMosaic() {
 
         int numberOfTilesX = ((int) image.getWidth()) / tileSizeX;
         int numberOfTilesY = ((int) image.getHeight()) / tileSizeY;
 
+        Image[][] mosaicArr = new Image[numberOfTilesX][numberOfTilesY];
         PixelReader pr = image.getPixelReader();
         Thread[] tileBuilders = new TileBuilder[numberOfTilesX * numberOfTilesY];
         int index;
@@ -73,7 +74,7 @@ public class MosaicBuilder{
 
                 tileBuilders[index] = new TileBuilder(
                         x * tileSizeX, y * tileSizeY, tileSizeX, tileSizeY,
-                        pieces, mosaicArr, pr);
+                        tileListBuilder.getTiles(), mosaicArr, pr);
 
                 tileBuilders[index].start();
             }
@@ -86,7 +87,8 @@ public class MosaicBuilder{
             }
         }
 
-
+        int imageWidth = (int) image.getWidth();
+        int imageHeight = (int) image.getHeight();
 
         WritableImage writableMosaic = new WritableImage(imageWidth, imageHeight);
         Image tempTile;
@@ -101,7 +103,7 @@ public class MosaicBuilder{
             }
         }
 
-        mosaic = (Image) writableMosaic;
+        return (Image) writableMosaic;
     }
 
     public void setTileSize(int tileSizeX, int tileSizeY){

@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TileList {
+public class TileListBuilder {
 
     ArrayList<Tile> tiles;
     ArrayList<SubTile>[][] subTiles;
@@ -22,8 +22,9 @@ public class TileList {
         Tile tempTile;
         SubTile tempSubTile;
         for (int i = 0; i < dirList.length; i++) {
+
             temp = new Image(dirList[i].toURI().toString());
-            tempTile = new Tile(temp);
+            tempTile = new Tile(temp, quadrantsX, quadrantsY);
             tiles.add(tempTile);
 
             for (int x = 0; x < quadrantsX; x++) {
@@ -36,7 +37,6 @@ public class TileList {
                 }
             }
         }
-
         Collections.sort(tiles);
 
         for (int x = 0; x < quadrantsX; x++) {
@@ -44,5 +44,13 @@ public class TileList {
                 Collections.sort(subTiles[x][y]);
             }
         }
+    }
+
+    public ArrayList<Tile> getTiles(){
+        return tiles;
+    }
+
+    public ArrayList<SubTile>[][] getSubTiles(){
+        return subTiles;
     }
 }

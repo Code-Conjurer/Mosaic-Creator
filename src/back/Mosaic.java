@@ -10,7 +10,7 @@ public class Mosaic {
     private Image completedMosaic;
 
 
-    public void allocateTiles(int tileSizeX,int tileSizeY,TileList tileList) {
+    public void allocateTiles(int tileSizeX,int tileSizeY,TileListBuilder tileList) {
 
         int numberOfTilesX = ((int) img.getWidth()) / tileSizeX;
         int numberOfTilesY = ((int) img.getHeight()) / tileSizeY;

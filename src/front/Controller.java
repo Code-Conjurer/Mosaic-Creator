@@ -106,7 +106,7 @@ public class Controller {
         }catch (Exception e){
             e.printStackTrace();
         }
-        mosaic.runMosaicBuilder(tileSizeX, tileSizeY);
+        mosaic.runMosaicBuilder(tileSizeX, tileSizeY, 2, 2);
     }
 
 

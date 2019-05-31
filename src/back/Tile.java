@@ -21,28 +21,53 @@ public class Tile implements Comparable<Tile>{
 	
 	private final double opacity = 0;
 
-	public Tile(Image image, int numberOfQuadrantsSquared){
+	public Tile(Image image, int quadrantsX, int quadrantsY){
 		this.image = image;
 		//width = image.getWidth();
 		//height = image.getHeight();
 
-		if(numberOfQuadrantsSquared <= 1)
-		    simpleInit();
-		quadrantInit(numberOfQuadrantsSquared);
+		quadrantInit(quadrantsX, quadrantsY);
 	}
 
-	public Tile(Image image){
+	/*public Tile(Image image){
 		this.image = image;
 		//width = image.getWidth();
 		//height = image.getHeight();
 		simpleInit();
-	}
+	}*/
 
-	private void quadrantInit(int n){
-        red = new double[n][n];
-        green = new double[n][n];
-        blue = new double[n][n];
+	private void quadrantInit(int quadrantsX, int quadrantsY) {
+        red = new double[quadrantsX][quadrantsY];
+        green = new double[quadrantsX][quadrantsY];
+        blue = new double[quadrantsX][quadrantsY];
+        brightness = new double[quadrantsX][quadrantsY];
 
+        double[] tempArr;
+
+        PixelReader pr = image.getPixelReader();
+        for (int x = 0; x < quadrantsX; x++) {
+            for (int y = 0; y < quadrantsY; y++) {
+                tempArr = quadrantAverage(0, 0, (int) image.getWidth(), (int) image.getHeight(), pr);
+
+                red[x][y] = tempArr[0];
+                averageRed += tempArr[0];
+
+                green[x][y] = tempArr[1];
+                averageGreen += tempArr[1];
+
+                blue[x][y] = tempArr[2];
+                averageBlue += tempArr[2];
+
+                brightness[x][y] = tempArr[3];
+                averageBrightness += tempArr[3];
+
+            }
+        }
+
+        averageRed /= quadrantsX*quadrantsY;
+        averageGreen /= quadrantsX*quadrantsY;
+        averageBlue /= quadrantsX*quadrantsY;
+        averageBrightness /= quadrantsX*quadrantsY;
 
     }
 
@@ -136,7 +161,7 @@ public class Tile implements Comparable<Tile>{
     public double getGreen(){return  averageGreen; }
     public double getBlue(){ return averageBlue; }
     public double[][] getBrightnessArr(){
-        return (brightness);
+        return brightness;
     }
 	public double[][] getRedArr(){
 		return  (red);

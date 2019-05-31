@@ -42,14 +42,14 @@ public class Mosaic {
         return image;
     }
 
-    public void runMosaicBuilder(Integer tileSizeX, Integer tileSizeY, int NumOfQuadrants){
+    public void runMosaicBuilder(Integer tileSizeX, Integer tileSizeY, int NumOfQuadrantsX, int NumOfQuadrantsY){
 
         if (image == null) {
             System.out.println("Null Image");
             return;
         }
 
-        image = mosaicBuilder.run(image, tileSizeX, tileSizeY, NumOfQuadrants);
+        image = mosaicBuilder.run(image, tileSizeX, tileSizeY, NumOfQuadrantsX, NumOfQuadrantsY);
         System.out.println("done");
         controller.showImage(image);
     }

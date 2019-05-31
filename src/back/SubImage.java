@@ -42,15 +42,15 @@ public class SubImage{
     }
 
     private double getHue(int x, int y){
-
+        return reference.getColor(x, y).getHue();
     }
 
     private double getSaturation(int x, int y){
-
+        return reference.getColor(x, y).getSaturation();
     }
 
     private double getBrightness(int x, int y){
-
+        return reference.getColor(x, y).getBrightness();
     }
 
 }
